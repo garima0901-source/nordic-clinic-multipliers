@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nordic Clinic Multipliers</title>
+<meta name="description" content="Independent research: the organisations that already reach thousands of Nordic dental clinics, and why each would want to partner with a Swedish AI dental scribe.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5f0; --surface:#ffffff; --surface-2:#efece4; --ink:#1b2430; --ink-2:#4a5563; --ink-3:#6b7480;
+  --line:#dcd7cc; --accent:#0f5f63; --accent-ink:#ffffff; --accent-soft:#d9ecea; --warm:#b4602a; --warm-soft:#f6e3d4;
+  --now:#0f5f63; --next:#8a6a12; --later:#6b7480;
+  --radius:14px; --shadow:0 1px 2px rgba(20,30,40,.06),0 6px 24px rgba(20,30,40,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11161c; --surface:#18202a; --surface-2:#1f2935; --ink:#e9edf1; --ink-2:#b4bdc8; --ink-3:#8e98a4;
+    --line:#2c3846; --accent:#5fc0c0; --accent-ink:#0c1a1c; --accent-soft:#173536; --warm:#e39a66; --warm-soft:#3a2a1f;
+    --now:#5fc0c0; --next:#d9b44a; --later:#8e98a4; --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11161c; --surface:#18202a; --surface-2:#1f2935; --ink:#e9edf1; --ink-2:#b4bdc8; --ink-3:#8e98a4;
+  --line:#2c3846; --accent:#5fc0c0; --accent-ink:#0c1a1c; --accent-soft:#173536; --warm:#e39a66; --warm-soft:#3a2a1f;
+  --now:#5fc0c0; --next:#d9b44a; --later:#8e98a4; --shadow:none;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:650;line-height:1.15;letter-spacing:-.01em;margin:0}
+h1{font-size:clamp(2rem,5vw,3.3rem)}
+h2{font-size:clamp(1.5rem,3.2vw,2.1rem);margin-bottom:.4rem}
+h3{font-size:1.15rem}
+p{margin:.5rem 0}
+.muted{color:var(--ink-2)} .small{font-size:.86rem} .tiny{font-size:.78rem;color:var(--ink-3)}
+sup a{text-decoration:none;font-size:.7em;padding:0 1px}
+nav.top{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;gap:18px;align-items:center;height:52px;overflow-x:auto;white-space:nowrap}
+nav.top a{color:var(--ink-2);text-decoration:none;font-size:.88rem}
+nav.top a:hover{color:var(--ink)}
+nav.top .brand{font-family:Fraunces,serif;font-weight:650;color:var(--ink);margin-right:auto}
+#themeBtn{border:1px solid var(--line);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:4px 10px;font:inherit;font-size:.8rem;cursor:pointer}
+header.hero{padding:64px 0 28px}
+.eyebrow{display:inline-block;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:14px}
+.lede{font-size:1.15rem;max-width:760px;color:var(--ink-2);margin-top:16px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:32px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+.stat b{display:block;font-family:Fraunces,serif;font-size:1.9rem;line-height:1.1;color:var(--accent)}
+.stat span{font-size:.86rem;color:var(--ink-2)}
+section{padding:56px 0;border-top:1px solid var(--line)}
+.section-intro{max-width:760px;color:var(--ink-2)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:24px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.card h3{margin-bottom:6px}
+.play{position:relative;padding-top:26px}
+.play .num{position:absolute;top:-12px;left:18px;background:var(--accent);color:var(--accent-ink);font-weight:600;font-size:.78rem;border-radius:999px;padding:3px 10px}
+.play ul{padding-left:18px;margin:.6rem 0}
+.play li{margin:.25rem 0}
+.callout{background:var(--accent-soft);border-radius:var(--radius);padding:16px 18px;margin-top:20px}
+.callout.warm{background:var(--warm-soft)}
+.pill{display:inline-block;font-size:.72rem;font-weight:600;border-radius:999px;padding:2px 9px;border:1px solid var(--line);color:var(--ink-2);background:var(--surface-2);margin:0 4px 4px 0}
+.pri{font-weight:600;font-size:.75rem;border-radius:999px;padding:2px 9px;color:#fff}
+.pri.Now{background:var(--now);color:var(--accent-ink)} .pri.Next{background:var(--next);color:#fff} .pri.Later{background:var(--later);color:#fff}
+:root[data-theme="dark"] .pri.Next{color:#1b1400}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pri.Next{color:#1b1400}}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 14px}
+.filters button{border:1px solid var(--line);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:6px 12px;font:inherit;font-size:.85rem;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.filters .sep{width:1px;background:var(--line);margin:0 4px}
+.partners{display:grid;gap:12px}
+details.partner{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+details.partner summary{list-style:none;cursor:pointer;padding:16px 18px;display:grid;grid-template-columns:1fr auto;gap:6px 14px;align-items:center}
+details.partner summary::-webkit-details-marker{display:none}
+details.partner summary .name{font-weight:600;font-size:1.02rem}
+details.partner summary .reach{grid-column:1/2;color:var(--ink-2);font-size:.9rem}
+details.partner summary .chev{grid-row:1/3;grid-column:2;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+details.partner summary .chev i{font-style:normal;color:var(--ink-3);font-size:.8rem}
+details.partner[open] summary .chev i::after{content:" ▲"} details.partner summary .chev i::after{content:" ▼"}
+.pbody{padding:0 18px 18px;display:grid;grid-template-columns:repeat(2,1fr);gap:14px 24px;border-top:1px solid var(--line);padding-top:14px}
+.pbody h4{margin:0 0 4px;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);font-weight:600}
+.pbody p{margin:0;font-size:.93rem}
+.pbody .full{grid-column:1/-1}
+.label-assume{font-size:.72rem;font-weight:600;color:var(--warm);text-transform:uppercase;letter-spacing:.05em}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:10px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);font-weight:600}
+.tablewrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);margin-top:20px}
+.events{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px}
+.event{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;border-top:4px solid var(--accent)}
+.event.later{border-top-color:var(--line)}
+.event .when{font-family:Fraunces,serif;font-size:1.15rem}
+.event .where{color:var(--ink-2);font-size:.88rem}
+.calc{display:grid;grid-template-columns:320px 1fr;gap:20px;margin-top:24px}
+.calc label.chk{display:flex;gap:10px;align-items:center;padding:7px 0;border-bottom:1px dashed var(--line);font-size:.92rem}
+.calc label.chk span.n{margin-left:auto;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.slider{margin-top:16px}
+.slider input{width:100%;accent-color:var(--accent)}
+.result{font-family:Fraunces,serif;font-size:2.6rem;color:var(--accent);line-height:1}
+.bars{margin-top:16px;display:grid;gap:8px}
+.bar{display:grid;grid-template-columns:150px 1fr 54px;gap:10px;align-items:center;font-size:.86rem}
+.bar .track{background:var(--surface-2);border-radius:6px;height:14px;overflow:hidden}
+.bar .fill{background:var(--accent);height:100%;border-radius:6px;transition:width .3s}
+.bar .v{text-align:right;font-variant-numeric:tabular-nums}
+.bar.base .fill{background:var(--ink-3)}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.steps .card h3{font-size:1.05rem}
+.steps ul{padding-left:18px;margin:.4rem 0 0}
+.steps li{margin:.3rem 0;font-size:.93rem}
+ol.sources{font-size:.86rem;color:var(--ink-2);padding-left:22px;columns:2;column-gap:32px}
+ol.sources li{margin:.25rem 0;break-inside:avoid}
+footer{padding:36px 0 60px;border-top:1px solid var(--line);color:var(--ink-3);font-size:.84rem}
+.stage{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--line);margin-right:3px;vertical-align:middle}
+.stage.on{background:var(--accent)}
+@media (max-width:900px){
+  .stats,.events{grid-template-columns:repeat(2,1fr)}
+  .grid3,.steps{grid-template-columns:1fr}
+  .grid2{grid-template-columns:1fr}
+  .calc{grid-template-columns:1fr}
+  ol.sources{columns:1}
+}
+@media (max-width:560px){
+  .pbody{grid-template-columns:1fr}
+  .bar{grid-template-columns:110px 1fr 44px}
+  header.hero{padding-top:40px}
+}
+</style>
+</head>
+<body>
+<nav class="top" aria-label="Sections">
+  <div class="wrap">
+    <span class="brand">Clinic Multipliers</span>
+    <a href="#plays">Big plays</a>
+    <a href="#map">Partner map</a>
+    <a href="#why">Why they'd say yes</a>
+    <a href="#season">Congress season</a>
+    <a href="#reach">Reach model</a>
+    <a href="#plan">90-day plan</a>
+    <a href="#sources">Sources</a>
+    <button id="themeBtn" type="button" aria-label="Toggle colour theme">◐ Theme</button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Independent research · October 2026</span>
+    <h1>One partner, hundreds of clinics.</h1>
+    <p class="lede">A Swedish AI dental scribe now in about 100 Swedish clinics<sup><a href="#s1">1</a></sup> could take Norway, Denmark and Finland one clinic at a time. Or it could go through the organisations that <em>already</em> reach most of those clinics: the record systems they type into, the distributor that supplies them, the chains that own them, and the associations and congresses they trust. This page maps those organisations and shows what each one gets from a partnership.</p>
+    <div class="stats">
+      <div class="stat"><b>3,500+</b><span>Nordic clinics on one record system, which runs an open partner API program<sup><a href="#s3">3</a></sup></span></div>
+      <div class="stat"><b>4 of 4</b><span>Nordic markets covered by one chain group (Colosseum) and one distributor (Plandent)<sup><a href="#s7">7</a>,<a href="#s5">5</a></sup></span></div>
+      <div class="stat"><b>~20,000</b><span>dentist association members across Norway, Denmark and Finland (incl. students and retirees)<sup><a href="#s16">16</a>,<a href="#s17">17</a>,<a href="#s19">19</a></sup></span></div>
+      <div class="stat"><b>3</b><span>national dental congresses in the next five weeks: Stavanger, Helsinki, Gothenburg<sup><a href="#s21">21</a>,<a href="#s22">22</a>,<a href="#s23">23</a></sup></span></div>
+    </div>
+  </div>
+</header>
+
+<section id="plays">
+  <div class="wrap">
+    <h2>Three plays worth more than a sales team</h2>
+    <p class="section-intro">The research turned up two corporate groups and one calendar window that together cover all four Nordic markets. Each one is a single conversation that could open hundreds of clinics.</p>
+    <div class="grid3">
+      <article class="card play">
+        <span class="num">Play 1</span>
+        <h3>The Planmeca group: record systems and distribution, one owner</h3>
+        <ul>
+          <li><b>Opus Dental</b>: 3,500+ clinics and 15,000+ users in the Nordics. It runs an API partner program with a test environment, joint pilots and market exposure.<sup><a href="#s3">3</a>,<a href="#s4">4</a></sup></li>
+          <li><b>AssisDent</b> (Entteri): the private-sector market leader in Finland.<sup><a href="#s6">6</a></sup></li>
+          <li><b>Plandent</b>: the largest dental distributor in Northern Europe, in all four Nordic countries.<sup><a href="#s5">5</a></sup> It has distributed another company's dental AI (Pearl) across the Nordics since Dec 2024.<sup><a href="#s8">8</a></sup></li>
+        </ul>
+        <p class="small muted">All three sit inside Planmeca Group.<sup><a href="#s4">4</a>,<a href="#s6">6</a>,<a href="#s8">8</a></sup> A note that goes straight into the clinic's record system is the integration story. Plandent's Pearl deal shows they already resell AI to clinics.</p>
+      </article>
+      <article class="card play">
+        <span class="num">Play 2</span>
+        <h3>Colosseum Dental Group: one chain, four countries</h3>
+        <ul>
+          <li><b>Smile Tandvård</b> (SE): 60+ clinics, calls itself Sweden's largest private chain.<sup><a href="#s9">9</a></sup></li>
+          <li><b>Colosseum Tannlege</b> (NO): 80+ clinics, 1,200+ staff.<sup><a href="#s10">10</a></sup></li>
+          <li><b>Oral Hammaslääkärit</b> (FI): ~70 sites, ~270,000 visits a year, runs on AssisDent. Medical devices are bought centrally with the group's procurement director, and the scribe is a CE-marked device.<sup><a href="#s11">11</a></sup></li>
+          <li><b>Colosseum Tandlægerne</b> (DK).<sup><a href="#s7">7</a></sup></li>
+        </ul>
+        <p class="small muted">A Swedish Smile clinic is a home-market reference. Oral's central buying points to a group-level decision covering 200+ clinics, with no clinic-by-clinic sales.</p>
+      </article>
+      <article class="card play">
+        <span class="num">Play 3</span>
+        <h3>Congress season: the whole profession in five weeks</h3>
+        <ul>
+          <li><b>NTF Landsmøte + Nordental</b>, Stavanger: ~100 exhibitors, and "AI in the clinic" is on the programme.<sup><a href="#s21">21</a></sup></li>
+          <li><b>Finnish Dental Convention</b>, Helsinki, 4–6 Nov. It's Finland's biggest dental event.<sup><a href="#s22">22</a></sup></li>
+          <li><b>Riksstämman + Swedental</b>, Gothenburg, 11–13 Nov, ~170 exhibitors.<sup><a href="#s23">23</a></sup></li>
+        </ul>
+        <p class="small muted">Plandent, Opus, chain leaders and association boards all attend. That means partner meetings can be booked now, before the year's budgets close.</p>
+      </article>
+    </div>
+    <div class="callout warm">
+      <b>A bridge from Sweden that already exists:</b> one of the scribe's current Swedish partners, the distributor Nordenta,<sup><a href="#s2">2</a></sup> has a Danish sister company, Dansk Nordenta, in the same Lifco dental group.<sup><a href="#s12">12</a></sup> It's a warm introduction into Denmark through a partner that already knows the product.
+    </div>
+  </div>
+</section>
+
+<section id="map">
+  <div class="wrap">
+    <h2>The partner map</h2>
+    <p class="section-intro">There are 19 organisations across five lanes. Each entry shows their sourced reach, what they gain, what the scribe gains, the likely partnership model and a first step. Priority reflects reach, fit and how warm the path is. Anything that is a judgement, not a published fact, is marked <span class="label-assume">Assumption</span>.</p>
+    <div class="filters" role="group" aria-label="Filter partners">
+      <button data-f="country" data-v="all" aria-pressed="true">All countries</button>
+      <button data-f="country" data-v="NO" aria-pressed="false">Norway</button>
+      <button data-f="country" data-v="DK" aria-pressed="false">Denmark</button>
+      <button data-f="country" data-v="FI" aria-pressed="false">Finland</button>
+      <button data-f="country" data-v="SE" aria-pressed="false">Sweden</button>
+      <span class="sep"></span>
+      <button data-f="lane" data-v="all" aria-pressed="true">All lanes</button>
+      <button data-f="lane" data-v="Record system" aria-pressed="false">Record systems</button>
+      <button data-f="lane" data-v="Distributor" aria-pressed="false">Distributors</button>
+      <button data-f="lane" data-v="Chain" aria-pressed="false">Chains</button>
+      <button data-f="lane" data-v="Association" aria-pressed="false">Associations</button>
+      <button data-f="lane" data-v="Congress" aria-pressed="false">Congresses</button>
+    </div>
+    <p class="tiny" id="count"></p>
+    <div class="partners" id="partners"></div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <h2>Why each partner would say yes</h2>
+    <p class="section-intro">A partnership only happens if the other side gains something it wants anyway. This is the pitch I'd bring to each type of partner.</p>
+    <div class="grid2">
+      <article class="card">
+        <span class="pill">Record systems</span>
+        <h3>"Give your clinics AI documentation without building it."</h3>
+        <p class="muted small">AI notes land in your journal, so clinics depend on your system more, not less. Opus already invites partners into joint pilots with market exposure.<sup><a href="#s4">4</a></sup> A scribe integration is an AI feature for its 3,500+ clinics with no in-house build.</p>
+      </article>
+      <article class="card">
+        <span class="pill">Distributors</span>
+        <h3>"Add recurring software revenue to every consumables visit."</h3>
+        <p class="muted small">Plandent's reps already resell Pearl's X-ray AI.<sup><a href="#s8">8</a></sup> A scribe that writes clinical notes complements X-ray diagnostics rather than competing with it. <span class="label-assume">Assumption</span> Reseller margin or referral fee to be agreed.</p>
+      </article>
+      <article class="card">
+        <span class="pill">Chains</span>
+        <h3>"Hand admin hours back to every dentist, the same way across the group."</h3>
+        <p class="muted small">In Sweden, 65% of dentists regularly work overtime on admin, often 1–5 hours a week.<sup><a href="#s13">13</a></sup> For a chain, that's capacity it doesn't need to hire. The scribe already offers multi-clinic groups a dedicated contact, change management and ongoing support.<sup><a href="#s14">14</a></sup></p>
+      </article>
+      <article class="card">
+        <span class="pill">Associations</span>
+        <h3>"A member benefit that answers your members' biggest complaint."</h3>
+        <p class="muted small">Associations need tangible member value, and admin load is a top concern.<sup><a href="#s13">13</a></sup> The offer: member pricing, plus a course session on AI documentation, GDPR and patient-record law. The Swedish self-employed dentists' association TEV is already a partner,<sup><a href="#s2">2</a></sup> which gives a reference model for Norway, Denmark and Finland.</p>
+      </article>
+    </div>
+    <div class="callout">
+      <b>The trust layer partners will ask about, already in place:</b> CE-marked Class I medical device under EU MDR, ISO/IEC 27001:2022 certified, data processed in the EU, audio deleted within 24 hours, and patient data not used for training.<sup><a href="#s1b">1</a></sup> Every partner conversation should open with this. It removes the main objection before anyone raises it.
+    </div>
+  </div>
+</section>
+
+<section id="season">
+  <div class="wrap">
+    <h2>Congress season: where the partners will be</h2>
+    <p class="section-intro">Each country's national dental congress gathers dentists, chain leaders, distributors and record-system vendors in one hall. Three are in the next five weeks.</p>
+    <div class="events">
+      <div class="event">
+        <div class="tiny">Norway</div>
+        <div class="when">Late Oct 2026</div>
+        <div class="where">NTF Landsmøte + Nordental · Stavanger Forum</div>
+        <p class="small">~100 exhibitors. The programme includes "AI in the clinic" and a live glass-walled clinic.<sup><a href="#s21">21</a></sup></p>
+      </div>
+      <div class="event">
+        <div class="tiny">Finland</div>
+        <div class="when">4–6 Nov 2026</div>
+        <div class="where">Finnish Dental Convention · Helsinki Expo &amp; Convention Centre</div>
+        <p class="small">Exhibition 5–6 Nov. Lectures are organised by the Finnish Dental Society Apollonia.<sup><a href="#s22">22</a></sup></p>
+      </div>
+      <div class="event">
+        <div class="tiny">Sweden</div>
+        <div class="when">11–13 Nov 2026</div>
+        <div class="where">Riksstämman + Swedental · Svenska Mässan, Gothenburg</div>
+        <p class="small">~170 exhibiting companies.<sup><a href="#s23">23</a></sup></p>
+      </div>
+      <div class="event later">
+        <div class="tiny">Denmark</div>
+        <div class="when">Spring 2027</div>
+        <div class="where">Tandlægeforeningen Årskursus · Copenhagen</div>
+        <p class="small">Billed as Denmark's largest dental fair. The 2025 edition ran 28–29 March at Lokomotivværkstedet.<sup><a href="#s20">20</a></sup> 2027 dates are not yet published.</p>
+      </div>
+    </div>
+    <p class="tiny" style="margin-top:12px">The Stavanger dates are listed as 29–31 Oct by trade-fair calendars. Confirm with NTF before booking.</p>
+  </div>
+</section>
+
+<section id="reach">
+  <div class="wrap">
+    <h2>Reach model: what partner-led growth could add</h2>
+    <p class="section-intro">Pick the partners you'd sign, then set what share of their clinics might adopt. Clinic counts are each organisation's own published figure. The adoption rate is <b>your assumption</b>, so move it. Reach overlaps (a chain's clinics may also be on Opus), so treat the total as an upper bound.</p>
+    <div class="calc">
+      <div class="card">
+        <div id="chks"></div>
+        <div class="slider">
+          <label for="rate" class="small"><span class="label-assume">Assumption</span> Adoption within partner reach in year one: <b id="rateOut">5%</b></label>
+          <input id="rate" type="range" min="1" max="25" step="1" value="5">
+        </div>
+      </div>
+      <div class="card">
+        <div class="small muted">Potential new clinics through selected partners</div>
+        <div class="result" id="total">0</div>
+        <div class="small muted" id="vs"></div>
+        <div class="bars" id="bars"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="plan">
+  <div class="wrap">
+    <h2>How I'd run it: the first 90 days</h2>
+    <p class="section-intro">Partnerships stall without someone tracking the next step. Here's how the plan above becomes a working pipeline, with owners, stages and what gets reported each week.</p>
+    <div class="steps">
+      <div class="card">
+        <span class="pill">Days 1–30</span>
+        <h3>Close the gaps, book the rooms</h3>
+        <ul>
+          <li>Book partner meetings at Helsinki and Gothenburg (Plandent, Entteri, Oral, Smile).</li>
+          <li>Map Denmark's record systems. It's the one market this research couldn't source.</li>
+          <li>A one-page brief per lane, with the trust layer up front.</li>
+          <li>Ask Nordenta for an introduction to Dansk Nordenta.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="pill">Days 31–60</span>
+        <h3>Open the big doors</h3>
+        <ul>
+          <li>Apply to Opus's partner program for test-environment access.</li>
+          <li>Use a Swedish Smile clinic as the reference for a group-level Colosseum conversation.</li>
+          <li>Propose a member offer and a course session to NTF and Hammaslääkäriliitto.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="pill">Days 61–90</span>
+        <h3>First pilot live, measured</h3>
+        <ul>
+          <li>One partner pilot in a new market, with a clear success metric (admin minutes saved per dentist).</li>
+          <li>A partner dashboard: pipeline stage, clinics reached and pilot results.</li>
+          <li>Go or no-go on a second market, based on the data.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Partner</th><th>Stage</th><th>Owner</th><th>Next step</th><th>By</th></tr></thead>
+        <tbody>
+          <tr><td>Plandent (Nordics)</td><td><span class="stage on"></span><span class="stage"></span><span class="stage"></span><span class="stage"></span> Researched</td><td>Founder + Ops</td><td>Meeting request for Swedental, using the Pearl precedent as the hook</td><td>Week 2</td></tr>
+          <tr><td>Opus Dental (NO/SE)</td><td><span class="stage on"></span><span class="stage"></span><span class="stage"></span><span class="stage"></span> Researched</td><td>Product + Ops</td><td>Partner program application; scope a "note into journal" integration</td><td>Week 3</td></tr>
+          <tr><td>Colosseum: Smile (SE)</td><td><span class="stage on"></span><span class="stage"></span><span class="stage"></span><span class="stage"></span> Researched</td><td>GTM</td><td>Identify a Smile clinic for a home-market reference pilot</td><td>Week 4</td></tr>
+          <tr><td>Oral Hammaslääkärit (FI)</td><td><span class="stage on"></span><span class="stage"></span><span class="stage"></span><span class="stage"></span> Researched</td><td>Founder</td><td>Intro at the Helsinki convention; dependent on an AssisDent path</td><td>Week 3</td></tr>
+          <tr><td>Dansk Nordenta (DK)</td><td><span class="stage on"></span><span class="stage on"></span><span class="stage"></span><span class="stage"></span> Warm path</td><td>Ops</td><td>Introduction request through the existing Nordenta relationship</td><td>Week 2</td></tr>
+          <tr><td>NTF (NO)</td><td><span class="stage on"></span><span class="stage"></span><span class="stage"></span><span class="stage"></span> Researched</td><td>GTM</td><td>Member-offer proposal, modelled on TEV</td><td>Week 6</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tiny">Stages: Researched → Warm path → First meeting → Pilot. Owners are suggested roles, not names.</p>
+  </div>
+</section>
+
+<section id="gaps">
+  <div class="wrap">
+    <h2>What this research doesn't know yet</h2>
+    <div class="grid3">
+      <div class="card"><h3>Denmark's record systems</h3><p class="small muted">Opus lists only Norway and Sweden sites.<sup><a href="#s3">3</a></sup> I couldn't source which journal systems Danish private clinics run, which leaves an integration gap to close first.</p></div>
+      <div class="card"><h3>Language readiness</h3><p class="small muted">Partners will ask whether notes work in Norwegian, Danish and Finnish. The public site doesn't say. That's the first question to answer internally.</p></div>
+      <div class="card"><h3>Partner economics</h3><p class="small muted">Pricing isn't public, so this page models clinics, not revenue. Reseller margins and member discounts need a decision before the first meeting.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="sources">
+  <div class="wrap">
+    <h2>Sources</h2>
+    <p class="section-intro small">Every figure comes from the organisation's own publication, an official filing or its industry journal. Checked 14 October 2026. Counts are as each organisation published them, and some are self-descriptions ("largest").</p>
+    <ol class="sources" id="srcList"></ol>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Independent research prepared by Garima. It is not affiliated with, commissioned by or endorsed by any organisation named on this page. Names are used only to describe publicly available facts.
+  </div>
+</footer>
+
+<script>
+const SRC = {
+  s1:["The scribe company's GTM Associate job posting, 2026 (\"around 100 dental clinics\" in Sweden)",null],
+  s1b:["Scribe company website: compliance, certifications, partners and survey figures","https://dentio.com/"],
+  s2:["Scribe company website: partners and memberships (DentFriends, TEV, Nordenta)","https://dentio.com/"],
+  s3:["Opus Dental: 3,500+ clinics in the Nordics, 15,000+ users; country sites NO and SE","https://www.opusdental.com/no/om-oss"],
+  s4:["Opus Dental: Partners and API (partner program, test environment, joint pilots); part of Planmeca Group","https://www.opusdental.com/no/partnere-api"],
+  s5:["Plandent: about us (largest dental distributor in Northern Europe; Nordic and Baltic companies)","https://www.plandent.fi/en/about-us/"],
+  s6:["Planmeca / Cision, 11 Dec 2025: Entteri (Planmeca Group); AssisDent the Finnish private-sector market leader","https://news.cision.com/planmeca-oy/r/entteri-wins-product-development-path-makers-award,c4280483"],
+  s7:["Colosseum Dental Group: eleven countries incl. Denmark, Finland, Norway, Sweden; Nordic brands","https://www.colosseumdental.com/"],
+  s8:["Pearl, 10 Dec 2024: Plandent and Pearl partner to distribute Second Opinion across the Nordics and Germany","https://hellopearl.com/news/plandent-and-pearl-partner-to-expand-european-distribution-of-second-opinion-the-first-and-only-chairside-dental-ai-software-with-global-regulatory-clearance"],
+  s9:["Smile Tandvård: om oss (60+ clinics; part of Colosseum Dental Group)","https://www.smile.se/om-oss/"],
+  s10:["Colosseum Tannlege: om oss (80+ clinics in Norway, 1,200+ employees)","https://colosseumtannlege.no/om-oss"],
+  s11:["Oral Hammaslääkärit Oy, omavalvontasuunnitelma 09/2025 (~70 sites, ~270,000 visits, AssisDent, central procurement with Colosseum Dental Group)","https://www.oral.fi/app/uploads/2025/09/Omavalvontasuunnitelma-Oral-Hammaslaakarit-Oy-2025-09.pdf"],
+  s12:["Lifco: Dental business area (Nordenta in Sweden, Dansk Nordenta in Denmark)","https://www.lifco.se/business-areas/dental"],
+  s13:["Sveriges Tandläkarförbund & Novus (2024), as cited on the scribe company's website","https://dentio.com/"],
+  s14:["Scribe company: For clinic managers (\"Scalable for clinic chains\")","https://dentio.com/en/blog/for-klinikchef/"],
+  s15:["Oris Dental job ad, finn.no, updated 24 Nov 2025 (90+ clinics; also in Sweden and Denmark)","https://www.finn.no/job/ad/438156716"],
+  s16:["Store norske leksikon: Den norske tannlegeforening (6,640 members, Oct 2025; ~70% of working members private)","https://snl.no/Den_norske_tannlegeforening"],
+  s17:["Tandlægeforeningen job posting, May 2026 (\"godt 6.000 medlemmer\")","https://www.tandlaegeforeningen.dk/media/cfdpsnls/stillingsopslag-jurister-fast-og-barselsvikar-maj-2026.pdf"],
+  s18:["lex.dk: Tandlægeforeningen (~47% of members are self-employed clinic owners)","https://lex.dk/Tandl%C3%A6geforeningen"],
+  s19:["Suomen Hammaslääkäriliitto, STT release 27 Nov 2024 (~7,500 members, >90% of the profession)","https://www.sttinfo.fi/tiedote/70710588/100-vuotias-suomen-hammaslaakariliitto-muistuttaa-suun-terveydenhuollon-kehittamistarpeista?lang=fi"],
+  s20:["Tandlægeforeningen: Årskursus 2025 programme (28–29 March, Lokomotivværkstedet, Denmark's largest dental fair)","https://tandlaegeforeningen.dk/media/kmobx2m5/2024-0902-a-rskursus-2025-program-v19.pdf"],
+  s21:["Tidende (NTF) 2026 #2: \"Stavanger gjør seg klar til landsmøtet 2026\" (Stavanger Forum, ~100 exhibitors, AI in the clinic)","https://www.tannlegetidende.no/asset/journal/2026/02/Tidende-2026-02-204-6.pdf"],
+  s22:["Finnish Dental Convention 2026, Helsinki Expo and Convention Centre","https://hammaslaakaripaivat.messukeskus.com/en/"],
+  s23:["Sveriges Tandläkarförbund: Annual Dental Congress (11–13 Nov, Gothenburg, ~170 companies)","https://tandlakarforbundet.se/in-english/annual-dental-congress/"],
+  s25:["Praktikertjänst consultation response SOU 2024:70, Feb 2025 (~500 dental clinics, ~200 of 290 municipalities, 1M+ patients)","https://prod.praktikertjanst.se/491512/globalassets/00.-praktikertjanst-koncernwebb/04.-dokument/publikationer/praktikertjanst-remissvar_sou-2024_70.pdf"],
+  s26:["Privattandläkarna consultation response (≈70% of private dental businesses are members; ≈75% of private dentists)","https://www.regeringen.se/contentassets/19ad8691d2d04ed4b429dbf08b071c34/privattandlakarna.pdf"],
+  s27:["TEV consultation response S2026/01205 (≈1,000 self-employed dentists)","https://tandlakarforbundet.se/app/uploads/2026/06/TEV-remissvar-S202601205-fardig.pdf"],
+  s28:["Godt Smil: om Godt Smil (44 clinics; describes itself as Denmark's largest dental chain)","https://www.godtsmil.dk/om-godt-smil"],
+  s29:["Hammaslääkäriliitto: about the union (about half of members in private practice)","https://www.hammaslaakariliitto.fi/fi/liitto"],
+  s30:["Mehiläinen self-monitoring plan (dental records kept in AssisDent)","https://media.mehilainen.fi/terveyspalvelut/media/documents/omavalvontasuunnitelma_person/1736269377_e30e0f48aef1d658252e.pdf"]
+};
+
+const P = [
+  {name:"Opus Dental (Opus Systemer, Planmeca Group)",c:["NO","SE"],lane:"Record system",pri:"Now",clinics:3500,
+   reach:"3,500+ clinics and 15,000+ users across the Nordics",src:["s3","s4"],
+   gain:"An AI documentation feature for its clinics without building one. Notes written into Opus make the journal more central to the clinic.",
+   gets:"A 'note goes straight into the journal' workflow, plus visibility to Opus's installed base via the partner program's market exposure.",
+   model:"Integration partner (API), then co-marketing",
+   first:"Apply via the Partners & API page: request API docs and test-environment access, and propose a joint pilot."},
+  {name:"AssisDent (Entteri, Planmeca Group)",c:["FI"],lane:"Record system",pri:"Next",clinics:null,
+   reach:"Finnish private-sector market leader. Used by Oral and Mehiläinen.",src:["s6","s11","s30"],
+   gain:"The same AI-feature argument as Opus, for the Finnish market.",
+   gets:"The integration path into Finland's largest private chains, which keep their records in AssisDent.",
+   model:"Integration partner",
+   first:"Raise it in the same Planmeca group conversation as Opus and Plandent."},
+  {name:"Plandent (Planmeca Group)",c:["NO","DK","FI","SE"],lane:"Distributor",pri:"Now",clinics:null,
+   reach:"Largest dental distributor in Northern Europe, with companies in all four Nordic countries",src:["s5","s8"],
+   gain:"Recurring software revenue alongside consumables. It already resells Pearl's X-ray AI, and a scribe complements rather than competes with it.",
+   gets:"A sales force already visiting clinics in all four markets, plus a precedent contract shape (Pearl).",
+   model:"Reseller or referral partner",
+   first:"Request a meeting at Swedental (Plandent AB stand) and cite the Pearl partnership as the template."},
+  {name:"Nordenta → Dansk Nordenta (Lifco Dental)",c:["DK","SE"],lane:"Distributor",pri:"Now",clinics:null,
+   reach:"Nordenta (SE) is already a partner of the scribe. Its sister company Dansk Nordenta sells in Denmark.",src:["s2","s12"],
+   gain:"It extends a relationship that already works in Sweden to its Danish customers.",
+   gets:"A warm, low-risk first channel into Denmark.",
+   model:"Referral partner (replicate the Swedish arrangement)",
+   first:"Ask the Nordenta contact for an introduction to Dansk Nordenta."},
+  {name:"Colosseum Dental Group (group level)",c:["NO","DK","FI","SE"],lane:"Chain",pri:"Now",clinics:null,
+   reach:"Present in all four Nordic countries via Smile, Colosseum Tannlege, Oral and Colosseum Tandlægerne",src:["s7"],
+   gain:"One standard documentation workflow and admin time saved across four countries' dentists.",
+   gets:"A group-level agreement instead of country-by-country sales.",
+   model:"Enterprise group agreement",
+   first:"Win a Smile clinic in Sweden as the reference, then approach group procurement."},
+  {name:"Smile Tandvård (Colosseum)",c:["SE"],lane:"Chain",pri:"Now",clinics:60,
+   reach:"60+ clinics. Describes itself as Sweden's largest private dental chain.",src:["s9"],
+   gain:"Admin hours back for its dentists, in the scribe's home market where the product is proven.",
+   gets:"New Swedish clinics, and the reference that unlocks the rest of Colosseum.",
+   model:"Chain rollout (pilot → group)",
+   first:"Pilot at 2–3 Stockholm clinics with a measured before/after."},
+  {name:"Colosseum Tannlege",c:["NO"],lane:"Chain",pri:"Next",clinics:80,
+   reach:"80+ clinics in Norway, 1,200+ employees",src:["s10"],
+   gain:"Same as Smile, at Norway's scale.",
+   gets:"Immediate density in Norway.",
+   model:"Chain rollout via the group agreement",
+   first:"Follows the Smile reference. Meet at NTF Landsmøte."},
+  {name:"Oral Hammaslääkärit (Colosseum)",c:["FI"],lane:"Chain",pri:"Next",clinics:70,
+   reach:"~70 sites, ~270,000 visits a year. Runs on AssisDent. Medical devices are procured centrally with Colosseum.",src:["s11"],
+   gain:"Documentation time back at ~270,000 visits a year.",
+   gets:"Finland's anchor customer, once an AssisDent path exists.",
+   model:"Chain rollout via the group agreement",
+   first:"Introduction at the Finnish Dental Convention, 4–6 Nov."},
+  {name:"Oris Dental",c:["NO","DK","SE"],lane:"Chain",pri:"Next",clinics:90,
+   reach:"90+ clinics. Calls itself Norway's largest dental chain. Also in Sweden and Denmark.",src:["s15"],
+   gain:"A competitive edge in recruiting dentists: less admin is a hiring argument.",
+   gets:"A second Norwegian anchor that also spans Sweden and Denmark.",
+   model:"Chain rollout",
+   first:"Meet at NTF Landsmøte. Lead with dentist recruitment and retention."},
+  {name:"Godt Smil",c:["DK"],lane:"Chain",pri:"Next",clinics:44,
+   reach:"44 clinics. Calls itself Denmark's largest dental chain.",src:["s28"],
+   gain:"Standardised notes and admin time saved across 44 clinics.",
+   gets:"The Danish anchor customer.",
+   model:"Chain rollout",
+   first:"Approach after the Danish record-system gap is closed."},
+  {name:"Praktikertjänst",c:["SE"],lane:"Chain",pri:"Later",clinics:500,
+   reach:"~500 dental clinics in ~200 of 290 municipalities, 1M+ patients a year. Clinics are owned by the people who work in them.",src:["s25"],
+   gain:"Admin relief for owner-run clinics, many of them outside the big cities.",
+   gets:"The single largest block of Swedish private clinics.",
+   model:"Framework or preferred-supplier agreement",
+   first:"Its clinics are owned and run by the practitioners themselves, so start with owner-dentists in TEV's network. <span class='label-assume'>Assumption</span> Whether a group-level deal is possible needs confirming."},
+  {name:"Den norske tannlegeforening (NTF)",c:["NO"],lane:"Association",pri:"Now",clinics:null,
+   reach:"6,640 members (Oct 2025). ~70% of working members are in the private sector.",src:["s16"],
+   gain:"A concrete member benefit on a top workload issue, and AI-in-the-clinic content for its programme.",
+   gets:"Trust and reach to almost every Norwegian dentist.",
+   model:"Member offer + course session (TEV model)",
+   first:"Meet at Landsmøte. Propose the TEV-style member offer."},
+  {name:"Tandlægeforeningen",c:["DK"],lane:"Association",pri:"Next",clinics:null,
+   reach:"Just over 6,000 members. ~47% are self-employed clinic owners.",src:["s17","s18"],
+   gain:"A member benefit aimed at the clinic owners who run nearly half its membership.",
+   gets:"A direct route to Danish clinic owners, who are the buyers.",
+   model:"Member offer + Årskursus session",
+   first:"Propose a session for the spring 2027 Årskursus."},
+  {name:"Suomen Hammaslääkäriliitto",c:["FI"],lane:"Association",pri:"Next",clinics:null,
+   reach:"~7,500 members, over 90% of the profession. About half work in private practice.",src:["s19","s29"],
+   gain:"A member benefit, and a voice on AI documentation in Finnish dentistry.",
+   gets:"Credibility in Finland before the chains decide.",
+   model:"Member offer",
+   first:"Meet at the Helsinki convention. Present alongside Apollonia's programme."},
+  {name:"Privattandläkarna",c:["SE"],lane:"Association",pri:"Later",clinics:null,
+   reach:"≈70% of Sweden's private dental businesses are members. ≈75% of private dentists work at a member company.",src:["s26"],
+   gain:"A member benefit for business owners, complementing TEV's dentist-owners.",
+   gets:"Reach to the remaining Swedish private clinics.",
+   model:"Member offer",
+   first:"Approach once the TEV results can be shown."},
+  {name:"NTF Landsmøte + Nordental",c:["NO"],lane:"Congress",pri:"Now",clinics:null,
+   reach:"Stavanger Forum, late Oct 2026. ~100 exhibitors. AI in the clinic is on the programme.",src:["s21"],
+   gain:"(Organiser) Relevant AI content for attendees.",
+   gets:"Partner meetings with Colosseum, Oris, Opus and NTF in one place.",
+   model:"Attend + book meetings (exhibit next year)",
+   first:"Book meetings this week. The event is days away."},
+  {name:"Finnish Dental Convention",c:["FI"],lane:"Congress",pri:"Now",clinics:null,
+   reach:"Helsinki, 4–6 Nov 2026. Finland's biggest dental convention.",src:["s22"],
+   gain:"(Organiser) New AI topic for the programme.",
+   gets:"Oral, Plandent, Entteri and the association in one place.",
+   model:"Attend + book meetings",
+   first:"Book meetings with Oral and Entteri."},
+  {name:"Riksstämman + Swedental",c:["SE"],lane:"Congress",pri:"Now",clinics:null,
+   reach:"Gothenburg, 11–13 Nov 2026. ~170 exhibiting companies.",src:["s23"],
+   gain:"(Organiser) Showcase Swedish dental AI.",
+   gets:"Home-market chains plus the Plandent and Entteri stands.",
+   model:"Attend/exhibit + book meetings",
+   first:"Plandent meeting, plus Smile and Praktikertjänst contacts."},
+  {name:"Tandlægeforeningen Årskursus",c:["DK"],lane:"Congress",pri:"Later",clinics:null,
+   reach:"Copenhagen, spring. Billed as Denmark's largest dental fair.",src:["s20"],
+   gain:"(Organiser) AI documentation session for members.",
+   gets:"The Danish launch moment.",
+   model:"Exhibit + speaking slot",
+   first:"Apply for a session once 2027 dates are published."}
+];
+
+const order = Object.keys(SRC);
+document.getElementById('srcList').innerHTML = order.map(k=>SRC[k][1]?`<li id="${k}"><a href="${SRC[k][1]}" target="_blank" rel="noopener">${SRC[k][0]}</a></li>`:`<li id="${k}">${SRC[k][0]}</li>`).join('');
+const num = k => order.indexOf(k)+1;
+const sup = arr => '<sup>'+arr.map(k=>`<a href="#${k}">${num(k)}</a>`).join(',')+'</sup>';
+// renumber static superscripts to match list order
+document.querySelectorAll('sup a[href^="#s"]').forEach(a=>{const k=a.getAttribute('href').slice(1); if(SRC[k]) a.textContent=num(k);});
+
+const state={country:'all',lane:'all'};
+const flags={NO:'Norway',DK:'Denmark',FI:'Finland',SE:'Sweden'};
+function render(){
+  const list=P.filter(p=>(state.country==='all'||p.c.includes(state.country))&&(state.lane==='all'||p.lane===state.lane));
+  document.getElementById('count').textContent=`Showing ${list.length} of ${P.length} organisations`;
+  document.getElementById('partners').innerHTML=list.map(p=>`
+  <details class="partner">
+    <summary>
+      <span class="name">${p.name}</span>
+      <span class="reach">${p.reach}${sup(p.src)}</span>
+      <span class="chev"><span class="pri ${p.pri}">${p.pri}</span><i>details</i></span>
+      <span>${'<span class="pill">'+p.lane+'</span>'+p.c.map(c=>'<span class="pill">'+flags[c]+'</span>').join('')}</span>
+    </summary>
+    <div class="pbody">
+      <div><h4>What they gain</h4><p>${p.gain}</p></div>
+      <div><h4>What the scribe gains</h4><p>${p.gets}</p></div>
+      <div><h4>Partnership model</h4><p>${p.model}</p></div>
+      <div><h4>First step</h4><p>${p.first}</p></div>
+    </div>
+  </details>`).join('');
+}
+document.querySelectorAll('.filters button').forEach(b=>b.addEventListener('click',()=>{
+  const f=b.dataset.f; state[f]=b.dataset.v;
+  document.querySelectorAll(`.filters button[data-f="${f}"]`).forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));
+  render();
+}));
+render();
+
+// reach model
+const calcP=P.filter(p=>p.clinics);
+const defaults=new Set(['Opus Dental (Opus Systemer, Planmeca Group)','Smile Tandvård (Colosseum)','Colosseum Tannlege','Oral Hammaslääkärit (Colosseum)']);
+document.getElementById('chks').innerHTML='<div class="small muted" style="margin-bottom:6px">Partners with a published clinic count</div>'+calcP.map((p,i)=>`
+  <label class="chk"><input type="checkbox" data-i="${i}" ${defaults.has(p.name)?'checked':''}> ${p.name.replace(/ \(.*\)/,'')}<span class="n">${p.clinics.toLocaleString('en')}</span></label>`).join('');
+const rate=document.getElementById('rate');
+function calc(){
+  const r=+rate.value/100; document.getElementById('rateOut').textContent=rate.value+'%';
+  const sel=[...document.querySelectorAll('#chks input:checked')].map(x=>calcP[+x.dataset.i]);
+  const rows=sel.map(p=>({n:p.name.replace(/ \(.*\)/,''),v:Math.round(p.clinics*r)}));
+  const total=rows.reduce((a,b)=>a+b.v,0);
+  document.getElementById('total').textContent=total.toLocaleString('en');
+  document.getElementById('vs').textContent=total?`+${total} clinics on top of ~100 today (+${total}%). Upper bound: partner reach can overlap.`:'Select at least one partner';
+  const max=Math.max(100,...rows.map(r=>r.v));
+  document.getElementById('bars').innerHTML=`<div class="bar base"><span>Today (Sweden)</span><div class="track"><div class="fill" style="width:${100/max*100}%"></div></div><span class="v">~100</span></div>`+
+    rows.map(r=>`<div class="bar"><span>${r.n}</span><div class="track"><div class="fill" style="width:${r.v/max*100}%"></div></div><span class="v">${r.v}</span></div>`).join('');
+}
+document.getElementById('chks').addEventListener('change',calc); rate.addEventListener('input',calc); calc();
+
+// theme
+const root=document.documentElement;
+try{const t=localStorage.getItem('theme'); if(t) root.dataset.theme=t;}catch(e){}
+document.getElementById('themeBtn').addEventListener('click',()=>{
+  const dark=root.dataset.theme? root.dataset.theme==='dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme=dark?'light':'dark'; try{localStorage.setItem('theme',root.dataset.theme);}catch(e){}
+});
+</script>
+</body>
+</html>
